@@ -1,5 +1,7 @@
 # pm-footballteam
 
+This app use API to fetch, addition and edit users  
+
 ## Project setup
 ```
 npm install
