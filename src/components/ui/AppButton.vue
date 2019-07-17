@@ -1,11 +1,10 @@
 <template>
-  <h1 class="HeadingPrimary">{{text}}</h1>
+  <button class="btn btn--primary btn--green btn--icon">{{text}}</button>
 </template>
 
 <script>
-/* eslint-disable */
 export default {
-  name: "AppTitle",
+  name: "AppButton",
   props: {
     text: {
       type: String,
@@ -15,6 +14,7 @@ export default {
 };
 </script>
 
-
+<style lang="scss" scoped>
+</style>
 
 
