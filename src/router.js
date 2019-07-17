@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import ListUsers from './components/users/ListUsers.vue';
+import ListPage from './pages/UsersPages/ListPage.vue';
 
 Vue.use(Router);
 
@@ -8,9 +8,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/users',
+      path: '/',
       name: 'users',
-      component: ListUsers,
+      component: ListPage,
     },
   ],
 });
