@@ -5,8 +5,11 @@
     <div class="panel">
       <div class="panel__header">
         <SearchItem />
+        <AppButton text="Add user" />
       </div>
     </div>
+
+    <div class="divaider"></div>
   </div>
 </template>
 
@@ -14,11 +17,13 @@
 /* eslint-disable */
 import AppTitle from "@/components/ui/AppTitle.vue";
 import SearchItem from "@/components/SearchItem.vue";
+import AppButton from "@/components/ui/AppButton.vue";
 
 export default {
   components: {
     AppTitle,
-    SearchItem
+    SearchItem,
+    AppButton
   }
 };
 </script>
@@ -48,5 +53,10 @@ export default {
 
     justify-content: space-between;
   }
+}
+
+.divaider {
+  border: 1px solid #f7f8f9;
+  margin: 25px 0;
 }
 </style>
