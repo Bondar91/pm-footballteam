@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list-page">
     <AppTitle text="Users List" />
 
     <div class="panel">
@@ -7,9 +7,13 @@
         <SearchItem />
         <AppButton text="Add user" />
       </div>
-    </div>
 
-    <div class="divaider"></div>
+      <div class="divaider"></div>
+
+      <div class="panel__body">
+        <ItemList :users="users" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,12 +22,30 @@
 import AppTitle from "@/components/ui/AppTitle.vue";
 import SearchItem from "@/components/SearchItem.vue";
 import AppButton from "@/components/ui/AppButton.vue";
+import ItemList from "@/components/Items/ItemList.vue";
 
 export default {
+  name: "ListPage",
+  data() {
+    return {
+      users: []
+    };
+  },
+  methods: {
+    getUsers() {
+      this.$http
+        .get("https://reqres.in/api/users")
+        .then(({ data }) => (this.users = data.data));
+    }
+  },
+  created() {
+    this.getUsers();
+  },
   components: {
     AppTitle,
     SearchItem,
-    AppButton
+    AppButton,
+    ItemList
   }
 };
 </script>
@@ -31,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-.list {
+.list-page {
   @include centerJustify;
 
   flex-direction: column;
@@ -41,9 +63,9 @@ export default {
 }
 
 .panel {
-  background-color: #ffffff;
+  background-color: $white;
   border-radius: 0.5rem;
-  border: 1px solid #ebedf0;
+  border: 1px solid $border;
   padding: 30px 25px;
   margin-bottom: 30px;
   width: 100%;
@@ -56,7 +78,7 @@ export default {
 }
 
 .divaider {
-  border: 1px solid #f7f8f9;
+  border: 1px solid $border;
   margin: 25px 0;
 }
 </style>
