@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn--primary btn--green btn--icon">{{text}}</button>
+  <router-link to="/users/add" class="btn btn--primary btn--green btn--icon">{{text}}</router-link>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: 20px 50%;
-    padding: 10px 20px 10px 40px;
+    padding: 14px 20px 14px 40px;
   }
 
   &--green {

@@ -5,12 +5,12 @@
     </div>
     <p class="item__text">{{`${user.first_name} ${user.last_name}`}}</p>
     <div class="item__icon">
-      <a href="#" class="icon__edit">
+      <router-link to="/users/edit" class="icon__edit">
         <font-awesome-icon icon="edit" />
-      </a>
-      <a href="#" class="icon__trash">
+      </router-link>
+      <button @click="deleteUser(user.id)" class="icon__trash">
         <font-awesome-icon icon="trash" />
-      </a>
+      </button>
     </div>
   </div>
 </template>
@@ -50,6 +50,8 @@ export default {
 
     & .icon__trash,
     & .icon__edit {
+      background: none;
+      border: none;
       font-size: 2.5rem;
       margin-right: 1rem;
       color: $action-icon;
