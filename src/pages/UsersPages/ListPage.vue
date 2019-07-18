@@ -14,6 +14,8 @@
         <ItemList :users="users" />
       </div>
     </div>
+
+    <WithPagination :pagination="pagination" v-on:next="getUsers" />
   </div>
 </template>
 
@@ -23,19 +25,34 @@ import AppTitle from "@/components/ui/AppTitle.vue";
 import SearchItem from "@/components/SearchItem.vue";
 import AppButton from "@/components/ui/AppButton.vue";
 import ItemList from "@/components/Items/ItemList.vue";
+import WithPagination from "@/components/layout/WithPagination.vue";
 
 export default {
   name: "ListPage",
   data() {
     return {
-      users: []
+      users: [],
+      pagination: {
+        last_page: null,
+        current_page: 1,
+        prev_page_url: null
+      }
     };
   },
   methods: {
-    getUsers() {
+    getUsers(page = 1) {
       this.$http
-        .get("https://reqres.in/api/users")
-        .then(({ data }) => (this.users = data.data));
+        .get("https://reqres.in/api/users", {
+          params: {
+            page
+          }
+        })
+        .then(({ data }) => {
+          this.users = data.data;
+          this.pagination.last_page = data.total_pages;
+          this.pagination.current_page = data.page;
+          this.pagination.prev_page_url = data.page;
+        });
     }
   },
   created() {
@@ -45,7 +62,8 @@ export default {
     AppTitle,
     SearchItem,
     AppButton,
-    ItemList
+    ItemList,
+    WithPagination
   }
 };
 </script>
