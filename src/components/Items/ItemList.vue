@@ -7,7 +7,7 @@
         <h4 class="item-header__icon">Action</h4>
       </div>
       <div class="list__item" v-for="user in users" :key="user.id">
-        <ItemElement :user="user" />
+        <ItemElement :user="user" @deleteUser="deleteUser(user.id)" />
       </div>
     </div>
   </div>
@@ -22,6 +22,11 @@ export default {
   props: {
     users: {
       type: Array
+    }
+  },
+  methods: {
+    deleteUser(id) {
+      this.$emit("deleteUser", id);
     }
   },
   components: {

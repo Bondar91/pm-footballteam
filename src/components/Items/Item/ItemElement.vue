@@ -24,6 +24,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    deleteUser(id) {
+      this.$emit("deleteUser", id);
+    }
   }
 };
 </script>
