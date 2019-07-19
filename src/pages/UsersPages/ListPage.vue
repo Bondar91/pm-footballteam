@@ -11,11 +11,13 @@
       <div class="divaider"></div>
 
       <div class="panel__body">
-        <ItemList :users="users" />
+        <ItemList :users="users" @deleteUser="deleteUser" />
       </div>
     </div>
 
     <WithPagination :pagination="pagination" v-on:next="getUsers" />
+
+    <div class="alert" v-if="isDeleted">Usunięto poprawnie</div>
   </div>
 </template>
 
@@ -36,7 +38,8 @@ export default {
         last_page: null,
         current_page: 1,
         prev_page_url: null
-      }
+      },
+      isDeleted: false
     };
   },
   methods: {
@@ -53,6 +56,16 @@ export default {
           this.pagination.current_page = data.page;
           this.pagination.prev_page_url = data.page;
         });
+    },
+    deleteUser(id) {
+      this.$http.delete("https://reqres.in/api/users/" + id).then(response => {
+        this.isDeleted = true;
+        this.getUsers(this.pagination.current_page);
+
+        setTimeout(() => {
+          this.isDeleted = false;
+        }, 3000);
+      });
     }
   },
   created() {
@@ -98,5 +111,17 @@ export default {
 .divaider {
   border: 1px solid $border;
   margin: 25px 0;
+}
+
+.alert {
+  background-color: $green-btn;
+  padding: 20px;
+  font-size: 2.2rem;
+  color: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
 }
 </style>

@@ -3,7 +3,7 @@ import AppTitle from '@/components/ui/AppTitle.vue';
   <div class="add-page">
     <AppTitle text="Add User" />
 
-    <div class="panel-wrapper" v-if="!statusAdd">
+    <div class="panel-wrapper">
       <div class="col-of-8">
         <div class="panel">
           <div class="panel__body">
@@ -53,10 +53,11 @@ import AppTitle from '@/components/ui/AppTitle.vue';
       </div>
     </div>
 
-    <div class="success-alert" v-else>
+    <div class="alert" v-if="statusAdd">
       <h4>Dodano poprawnie:</h4>
-      <ul>
+      <ul class="list-unstyled">
         <li>ID: {{user.id }}</li>
+        <li>Avatar: {{user.avatar}}</li>
         <li>First Name: {{user.first_name }}</li>
         <li>Last Name: {{user.last_name }}</li>
         <li>CreatedAt: {{user.createdAt }}</li>
@@ -77,7 +78,8 @@ export default {
     return {
       user: {
         first_name: "",
-        last_name: ""
+        last_name: "",
+        avatar: ""
       },
       statusAdd: false
     };
@@ -230,15 +232,20 @@ export default {
   text-align: center;
 }
 
-.success-alert {
-  background: $green-btn;
-  color: $white;
-  font-size: 2.4rem;
-  width: 100%;
+.alert {
+  background-color: $green-btn;
   padding: 20px;
+  font-size: 2.2rem;
+  color: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
 
-  @include center;
-  flex-direction: column;
+.list-unstyled {
+  list-style: none;
 }
 </style>
 
