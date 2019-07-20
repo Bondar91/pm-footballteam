@@ -1,16 +1,18 @@
 <template>
-  <div class="list">
-    <div class="list__items">
-      <div class="item-header">
-        <h4 class="item-header__image"></h4>
-        <h4 class="item-header__text">Name</h4>
-        <h4 class="item-header__icon">Action</h4>
-      </div>
-      <div class="list__item" v-for="user in users" :key="user.id">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Full Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="user in users" :key="user.id">
         <ItemElement :user="user" @deleteUser="deleteUser(user.id)" />
-      </div>
-    </div>
-  </div>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -38,17 +40,69 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-.list {
+.table {
   width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: left;
+  display: block;
 
-  &__item {
+  @media (min-width: 768px) {
+    display: table;
+  }
+
+  thead {
+    display: block;
+    @media (min-width: 768px) {
+      display: table-header-group;
+    }
+
+    tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+      @media (min-width: 768px) {
+        position: static;
+      }
+    }
+  }
+
+  tbody {
+    display: block;
+    @media (min-width: 768px) {
+      display: table-row-group;
+    }
+  }
+
+  tr {
+    border-radius: 5px;
+    background: $white;
+
+    display: block;
+
+    @media (min-width: 768px) {
+      display: table-row;
+    }
     &:nth-child(even) {
       background-color: $background;
     }
   }
+
+  th {
+    padding: 12px;
+    display: block;
+    @media (min-width: 768px) {
+      display: table-cell;
+    }
+  }
+
+  th:first-child,
+  th:last-child {
+    width: 135px;
+  }
 }
 
-.item-header {
+/* .item-header {
   @include centerAlign;
   padding: 2.5rem 1rem;
   &__image {
@@ -62,5 +116,5 @@ export default {
   &__icon {
     flex-basis: 10%;
   }
-}
+} */
 </style>

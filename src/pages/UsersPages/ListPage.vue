@@ -104,7 +104,12 @@ export default {
   &__header {
     @include centerAlign;
 
-    justify-content: space-between;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -116,12 +121,16 @@ export default {
 .alert {
   background-color: $green-btn;
   padding: 20px;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: $white;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 2.2rem;
+  }
 }
 </style>

@@ -3,7 +3,7 @@ import AppTitle from '@/components/ui/AppTitle.vue';
   <div class="add-page">
     <AppTitle text="Add User" />
 
-    <div class="panel-wrapper">
+    <div class="panels-wrapper">
       <div class="col-of-8">
         <div class="panel">
           <div class="panel__body">
@@ -17,6 +17,7 @@ import AppTitle from '@/components/ui/AppTitle.vue';
                     class="form__input form__input--white"
                     placeholder="Add first name..."
                     v-model="user.first_name"
+                    required
                   />
                 </div>
                 <div class="form__group">
@@ -27,6 +28,7 @@ import AppTitle from '@/components/ui/AppTitle.vue';
                     class="form__input form__input--white"
                     placeholder="Add last name..."
                     v-model="user.last_name"
+                    required
                   />
                 </div>
               </div>
@@ -41,13 +43,22 @@ import AppTitle from '@/components/ui/AppTitle.vue';
       <div class="col-of-4">
         <div class="panel">
           <div class="panel__body">
-            <div class="panel__body-wrapper">
-              <div class="image-wrapper">
-                <img src="https://unsplash.it/200/200" alt class="image image--avatar" />
-              </div>
-
-              <button class="btn btn--block btn--white btn--white-icon">Change Photo</button>
+            <div class="image-wrapper">
+              <img src="https://unsplash.it/200/200" alt class="image image--avatar" />
             </div>
+
+            <button class="btn btn--block btn--white btn--white-icon" v-on:click="isInput=true">
+              <font-awesome-icon icon="camera" class="icon-photo" />Add Photo
+            </button>
+            <input
+              name="avatar"
+              type="url"
+              class="form__input form__input--white"
+              placeholder="Pls add url image..."
+              v-model="user.avatar"
+              v-if="this.isInput"
+              required
+            />
           </div>
         </div>
       </div>
@@ -81,10 +92,15 @@ export default {
         last_name: "",
         avatar: ""
       },
-      statusAdd: false
+      statusAdd: false,
+      isInput: false
     };
   },
   methods: {
+    changeStatusInput() {
+      //   this.isInput = true;
+      console.log("test");
+    },
     saveUser() {
       this.$http
         .post("https://reqres.in/api/users", this.user)
@@ -113,11 +129,31 @@ export default {
   padding: 0 20px;
 }
 
-.panel-wrapper {
+.panels-wrapper {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.col-of-4 {
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 30%;
+  }
+}
+
+.col-of-8 {
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 70%;
+    margin-right: 3rem;
+  }
 }
 
 .panel {
@@ -132,28 +168,39 @@ export default {
 
   &__body {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
   }
-}
-
-.col-of-4 {
-  flex-basis: 30%;
-}
-
-.col-of-8 {
-  flex-basis: 68%;
 }
 
 .form {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &__wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
   }
   &__group {
     padding-left: 15px;
     padding-right: 15px;
-    width: 50%;
+    margin-bottom: 2rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+      width: 50%;
+    }
   }
 
   &__input {
@@ -177,59 +224,54 @@ export default {
   }
 }
 
-.btn-wrapper {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-
-  justify-content: flex-end;
-  width: 200px;
-}
-
-.btn--add {
-  margin: 20px 0 0 15px;
-  border-radius: 5px;
-  padding: 15px 15px;
-}
-
-.btn--green {
-  background-color: $green-btn;
-  color: $white;
-}
-
-.panel__body-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.image-wrapper {
-  margin-bottom: 40px;
-}
-
 .image {
   border-radius: 50%;
+
+  &-wrapper {
+    margin-bottom: 40px;
+  }
+
+  &--avatar {
+    width: 150px;
+    height: 150px;
+    border: 2px solid $white;
+  }
 }
 
-.image--avatar {
-  width: 150px;
-  height: 150px;
-  border: 2px solid $white;
+.btn {
+  background: none;
+  border: none;
+  &-wrapper {
+    width: 200px;
+  }
+
+  &--add {
+    margin: 20px 0 0 15px;
+    border-radius: 5px;
+    padding: 15px 15px;
+  }
+
+  &--green {
+    background-color: $green-btn;
+    color: $white;
+  }
+
+  &--block {
+    display: block;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  &--white {
+    background-color: $white;
+    border: 1px solid $border;
+    color: $black;
+    text-align: center;
+  }
 }
 
-.btn--block {
-  display: block;
-  padding: 10px 20px;
-  width: 100%;
-}
-
-.btn--white {
-  background-color: $white;
-  border: 1px solid $border;
-  color: $black;
-  text-align: center;
+.icon-photo {
+  margin-right: 5px;
 }
 
 .alert {

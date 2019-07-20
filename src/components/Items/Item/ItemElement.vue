@@ -1,18 +1,20 @@
 <template>
-  <div class="item">
-    <div class="item__image">
+  <fragment>
+    <td>
       <img :src="user.avatar" alt class="image" />
-    </div>
-    <p class="item__text">{{`${user.first_name} ${user.last_name}`}}</p>
-    <div class="item__icon">
-      <router-link to="/users/edit" class="icon__edit">
-        <font-awesome-icon icon="edit" />
-      </router-link>
-      <button @click="deleteUser(user.id)" class="icon__trash">
-        <font-awesome-icon icon="trash" />
-      </button>
-    </div>
-  </div>
+    </td>
+    <td>{{`${user.first_name} ${user.last_name}`}}</td>
+    <td>
+      <span class="icon-wrapper">
+        <router-link to="/users/edit" class="icon-edit">
+          <font-awesome-icon icon="edit" />
+        </router-link>
+        <button @click="deleteUser(user.id)" class="icon-trash">
+          <font-awesome-icon icon="trash" />
+        </button>
+      </span>
+    </td>
+  </fragment>
 </template>
 
 <script>
@@ -35,45 +37,87 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
-.item {
-  @include centerAlign;
-  width: 100%;
-  padding: 2.5rem 1rem;
-  color: $black;
+td {
+  display: block;
+  position: relative;
+  padding-left: 50%;
+  padding-top: 12px;
+  padding-bottom: 12px;
 
-  &__image {
-    flex-basis: 10%;
+  @media (min-width: 768px) {
+    display: table-cell;
+    padding: 12px;
+    position: static;
   }
 
-  &__text {
-    flex-basis: 80%;
-  }
+  &:before {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 700;
 
-  &__icon {
-    flex-basis: 10%;
-    display: flex;
-
-    & .icon__trash,
-    & .icon__edit {
-      background: none;
-      border: none;
-      font-size: 2.5rem;
-      margin-right: 1rem;
-      color: $action-icon;
-      text-decoration: none;
-      transition: color 0.3s;
-
-      &:hover {
-        color: $action-icon-hover;
-      }
+    @media (min-width: 768px) {
+      display: none;
     }
   }
+
+  &:nth-of-type(1):before {
+    content: "";
+  }
+
+  &:nth-of-type(2):before {
+    content: "Full Name";
+  }
+
+  &:nth-of-type(3):before {
+    content: "Actions";
+  }
+
+  .icon-wrapper {
+    display: flex;
+    @media (min-width: 768px) {
+      display: inline-block;
+    }
+  }
+}
+
+td:first-child,
+td:last-child {
+  width: 135px;
+}
+
+td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+td:last-child {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .image {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+
+.icon-edit,
+.icon-trash {
+  display: inline-block;
+  margin-right: 1rem;
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $action-icon;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $action-icon-hover;
+  }
 }
 </style>
 
