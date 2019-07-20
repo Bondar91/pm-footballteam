@@ -21,12 +21,19 @@ export default {
 .btn {
   font-size: 1.6rem;
   text-decoration: none;
-  padding: 15px 30px;
+  padding: 0 0 0 15px;
+  line-height: 48px;
   border: none;
-  color: #ffffff;
+  color: $white;
   cursor: pointer;
   width: 140px;
+  width: 100%;
   height: 48px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    width: 140px;
+  }
 
   &--primary {
     border-radius: 3rem;
@@ -37,7 +44,6 @@ export default {
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: 20px 50%;
-    padding: 14px 20px 14px 40px;
   }
 
   &--green {

@@ -1,7 +1,7 @@
 import AppTitle from '@/components/ui/AppTitle.vue';
 <template>
   <div class="add-page">
-    <AppTitle text="Add User" />
+    <AppTitle text="Edit User" />
 
     <div class="panels-wrapper">
       <div class="col-of-8">
@@ -44,11 +44,11 @@ import AppTitle from '@/components/ui/AppTitle.vue';
         <div class="panel">
           <div class="panel__body">
             <div class="image-wrapper">
-              <img src="https://unsplash.it/200/200" alt class="image image--avatar" />
+              <img :src="user.avatar" alt class="image image--avatar" />
             </div>
 
             <button class="btn btn--block btn--white btn--white-icon" v-on:click="isInput=true">
-              <font-awesome-icon icon="camera" class="icon-photo" />Add Photo
+              <font-awesome-icon icon="camera" class="icon-photo" />Change Photo
             </button>
             <input
               name="avatar"
@@ -71,7 +71,7 @@ import AppTitle from '@/components/ui/AppTitle.vue';
         <li>Avatar: {{user.avatar}}</li>
         <li>First Name: {{user.first_name }}</li>
         <li>Last Name: {{user.last_name }}</li>
-        <li>CreatedAt: {{user.createdAt }}</li>
+        <li>UpdatedAt: {{user.updatedAt }}</li>
       </ul>
     </div>
   </div>
@@ -99,11 +99,9 @@ export default {
   methods: {
     saveUser() {
       this.$http
-        .post("https://reqres.in/api/users", this.user)
-        .then(response => {
+        .put("https://reqres.in/api/users/" + this.user.id, this.user)
+        .then(() => {
           this.statusAdd = true;
-          this.user = response.data;
-          console.log(response.data);
           setTimeout(() => {
             this.$router.push({ path: "/" });
           }, 5000);
@@ -111,7 +109,20 @@ export default {
         .catch(errorResponse => {
           console.error(errorResponse);
         });
+    },
+    getUser(id) {
+      this.$http
+        .get("https://reqres.in/api/users/" + id)
+        .then(({ data }) => {
+          this.user = data.data;
+        })
+        .catch(errorResponse => {
+          console.error(errorResponse);
+        });
     }
+  },
+  created: function() {
+    this.getUser(this.$route.params.userId);
   }
 };
 </script>
@@ -290,4 +301,3 @@ export default {
   list-style: none;
 }
 </style>
-
