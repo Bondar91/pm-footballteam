@@ -6,7 +6,7 @@
     <td>{{`${user.first_name} ${user.last_name}`}}</td>
     <td>
       <span class="icon-wrapper">
-        <router-link to="/users/edit" class="icon-edit">
+        <router-link v-bind:to="'/users/edit/'+user.id" class="icon-edit">
           <font-awesome-icon icon="edit" />
         </router-link>
         <button @click="deleteUser(user.id)" class="icon-trash">
